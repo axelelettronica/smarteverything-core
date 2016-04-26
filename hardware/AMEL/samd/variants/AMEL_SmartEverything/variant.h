@@ -78,7 +78,7 @@ extern "C"
 #define digitalPinToInterrupt(P)   ( g_APinDescription[P].ulExtInt )
 
 // LEDs
-#define PIN_LED_13           PIN_LED_GREEN
+#define PIN_LED_13           (13u)
 #define PIN_LED_RXL          (25u)
 #define PIN_LED_TXL          (26u)
 #define PIN_LED              PIN_LED_13
@@ -194,7 +194,6 @@ static const uint8_t SCK  = PIN_SPI_SCK ;
     LOW  = Light OFF
 
  */
-void ledYellowOneLight(uint32_t value);
 void ledYellowTwoLight(uint32_t value);
 void ledYellowThreeLight(uint32_t value);
 
