@@ -125,7 +125,7 @@ const PinDescription g_APinDescription[]=
  * |            | LEDs             |        |                 |
  * +------------+------------------+--------+-----------------+--------------------------------------------------------------------------------------------------------
  * | 25         |                  |  PB03  | RX              |
- * | 26         |                  |  PB01  | TX              |
+ * | 26         |                  |  PA27  | TX              |
  * +------------+------------------+--------+-----------------+--------------------------------------------------------------------------------------------------------
  */
   { PORTB,  3, PIO_OUTPUT, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE }, // used as output only
@@ -274,21 +274,21 @@ void SERCOM5_Handler()
 
 void ledYellowTwoLight(uint32_t value) {
     if (value == HIGH) {
-        digitalWrite(PIN_LED_RXL, LOW);
+        digitalWrite(PIN_LED2, LOW);
         } else if (value == LOW) {
-        digitalWrite(PIN_LED_RXL, HIGH);
+        digitalWrite(PIN_LED2, HIGH);
         } else {
-        analogWrite(PIN_LED_RXL, 255-value);   // in case of PWM
+        analogWrite(PIN_LED2, 255-value);   // in case of PWM
     }
 }
 
-void ledYellowOneLight(uint32_t value)   {
+void ledYellowThreeLight(uint32_t value)   {
     if (value == HIGH) {
-        digitalWrite(PIN_LED_TXL, LOW);
+        digitalWrite(PIN_LED3, LOW);
         } else if (value == LOW) {
-        digitalWrite(PIN_LED_TXL, HIGH);
+        digitalWrite(PIN_LED3, HIGH);
         } else {
-        analogWrite(PIN_LED_TXL, 255-value);   // in case of PWM
+        analogWrite(PIN_LED3, 255-value);   // in case of PWM
     }
 }
 
