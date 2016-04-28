@@ -37,7 +37,7 @@ else
     UNAME_S := $(shell uname -s)
 
     ifeq ($(UNAME_S),Linux)
-			MODULE_PATH?=$HOME/.arduino15/packages/arduino
+			MODULE_PATH?=$(HOME)/.arduino15/packages/arduino
 			ARM_GCC_PATH?=$(MODULE_PATH)/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/arm-none-eabi-
       RM=rm
 	    SEP=/
@@ -69,7 +69,7 @@ CFLAGS+=-g3 -O1 -DDEBUG=1
 else
 CFLAGS+=-Os -DDEBUG=0
 endif
-CFLAGS_EXTRA?=-D__SAMD21J18A__ -DUSB_PID_LOW=0x01 -DUSB_PID_HIGH=0xE0
+CFLAGS_EXTRA?=-D__SAMD21J18A__ -DUSB_PID_LOW=0x01 -DUSB_PID_HIGH=0xE0 -DUSB_VID_LOW=0x41 -DUSB_VID_HIGH=0x23
 INCLUDES=-I"$(MODULE_PATH)/tools/CMSIS/4.0.0-atmel/CMSIS/Include/" -I"$(MODULE_PATH)/tools/CMSIS/4.0.0-atmel/Device/ATMEL/"
 
 # -----------------------------------------------------------------------------
