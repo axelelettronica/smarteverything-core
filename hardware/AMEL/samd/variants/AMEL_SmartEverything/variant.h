@@ -78,9 +78,9 @@ extern "C"
 #define digitalPinToInterrupt(P)   ( g_APinDescription[P].ulExtInt )
 
 // LEDs
-#define PIN_LED_13           PIN_LED_GREEN
-#define PIN_LED_RXL          (26u)
-#define PIN_LED_TXL          (27u)
+#define PIN_LED_13           (13u)
+#define PIN_LED_RXL          (25u)
+#define PIN_LED_TXL          (26u)
 #define PIN_LED              PIN_LED_13
 #define PIN_LED2             PIN_LED_RXL
 #define PIN_LED3             PIN_LED_TXL
@@ -194,8 +194,8 @@ static const uint8_t SCK  = PIN_SPI_SCK ;
     LOW  = Light OFF
 
  */
-void ledYellowOneLight(uint32_t value);
 void ledYellowTwoLight(uint32_t value);
+void ledYellowThreeLight(uint32_t value);
 
 
 /*
@@ -285,9 +285,12 @@ extern Uart SigFox;
 #define SERIAL_PORT_HARDWARE        Serial1
 #define SERIAL_PORT_HARDWARE_OPEN   Serial1
 
+#define LED_YELLOW_ONE_INIT  
+#define LED_YELLOW_TWO_INIT  pinMode(PIN_LED2, OUTPUT)
+#define LED_YELLOW_THREE_INIT  pinMode(PIN_LED3, OUTPUT)
+#define LedTx(x)       ledYellowThreeLight(x)
+#define LedRx(x)       ledYellowTwoLight(x)
 
-#define LED_YELLOW_TWO_INIT  pinMode(PIN_LED_RXL, OUTPUT)
-#define LED_YELLOW_ONE_INIT  pinMode(PIN_LED_TXL, OUTPUT)
 
 
 extern uint8_t smeInitError;
