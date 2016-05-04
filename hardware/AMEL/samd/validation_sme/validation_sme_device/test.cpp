@@ -1,77 +1,97 @@
 /*
-  Copyright (c) 2014 Arduino.  All right reserved.
+    SmeGPS Library - Localization Information
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+    This example shows how to retrieve the GPS localization information:
+    Latitude, Longitude,  Altitude
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
+    It shows also the number of the satellites  are visible by the GPS receiver
+    This information is useful to well understand the accuracy of the localization information
 
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+    created 27 May 2015
+    by Seve (seve@axelelettronica.it)
 
-#define ARDUINO_MAIN
-#include "Arduino.h"
+    This example is in the public domain
+    https://github.com/ameltech
 
-#ifdef HID_ENABLED
-	const int buttonPin = 4;          // input pin for pushbutton
-	int previousButtonState = HIGH;   // for checking the state of a pushButton
-	int counter = 0;                  // button push counter
-#endif
+    SE868  more information available here:
+    http://www.telit.com/products/product-service-selector/product-service-selector/show/product/jupiter-se868-as/
+ */
 
-void setup(void)
-{
-#ifdef HID_ENABLED
-	Mouse.begin();
+#include <Wire.h>
 
-	// make the pushButton pin an input:
-	pinMode(buttonPin, INPUT);
-	// initialize control over the keyboard:
-	Keyboard.begin();
-#endif
+#include <sl868a.h>
+#include <Arduino.h>
 
-#ifdef CDC_ENABLED
-	SerialUSB.begin(115200);
-#endif
+int led_status = HIGH;
+
+typedef void (*ledPtr) (uint32_t) ;
+ledPtr led;
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+    SerialUSB.begin(115200);
+    smeGps.begin();
+    led = ledYellowTwoLight;
+    pinMode(13, OUTPUT);
 }
 
+// the loop function runs over and over again forever
+void loop() {
+    static unsigned loop_cnt = 0;
+    unsigned int altitude = 0;
+    unsigned char lockedSatellites = 0;
+    double latitude = 0;
+    double longitude = 0;
 
-void loop(void)
-{
-#ifdef HID_ENABLED
-	Mouse.move(1, 0, 0);
+    delay(5);
 
-	// read the pushbutton:
-	int buttonState = digitalRead(buttonPin);
-	// if the button state has changed, and it's currently pressed:
-	if ((buttonState != previousButtonState) && (buttonState == HIGH))
-	{
-		// increment the button counter
-		counter++;
-		// type out a message
-		Keyboard.print("You pressed the button ");
-		Keyboard.print(counter);
-		Keyboard.println(" times.");
-	}
-	// save the current button state for comparison next time:
-	previousButtonState = buttonState;
-#endif
+    if (smeGps.ready()) {
+        ledYellowTwoLight(LOW);
+        led = ledYellowThreeLight;
+        
+        led(HIGH);
 
-#ifdef CDC_ENABLED
-	if (SerialUSB.available() > 0)
-	{
-		char inChar;
-		while( -1 == (inChar = SerialUSB.read()));
-		SerialUSB.print(inChar);
-	}
+        altitude   = smeGps.getAltitude();
+        latitude   = smeGps.getLatitude();
+        longitude  = smeGps.getLongitude();
+        lockedSatellites = smeGps.getLockedSatellites();
 
-	delay(10);
-#endif
+        if ((loop_cnt % 200) == 0) {
+            SerialUSB.println(" ");
+            SerialUSB.print("Latitude    =  ");
+            SerialUSB.println(latitude, 6);
+            SerialUSB.print("Longitude   =  ");
+            SerialUSB.println(longitude, 6);
+            SerialUSB.print("Altitude    =  ");
+            SerialUSB.println(altitude, DEC);
+            SerialUSB.print("Satellites  =  ");
+            SerialUSB.println(lockedSatellites, DEC);
+            
+            if (led_status == LOW) {
+                led_status = HIGH;
+                } else {
+                led_status = LOW;
+            }
+            
+        }
+    } else {
+        if ((loop_cnt % 200) == 0) {
+            SerialUSB.println("Locking GPS position...");
+            if (isOnBattery()){
+                SerialUSB.println("is On Battery");
+                digitalWrite(13, HIGH);
+            } else {
+                SerialUSB.println("is On Power");
+                digitalWrite(13, LOW);
+            }            
+            if (led_status == LOW) {
+                led_status = HIGH;
+            } else {
+                led_status = LOW;
+            }
+        }
+    }
+
+    loop_cnt++;
+    led(led_status);
 }
-

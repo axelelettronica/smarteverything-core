@@ -218,7 +218,7 @@ const PinDescription g_APinDescription[]=
  * +------------+------------------+--------+-----------------+--------------------------------------------------------------------------------------------------------
  */
   { PORTA, 3, PIO_ANALOG,  PIN_ATTR_ANALOG,  No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE }, // DAC/VREFP
-  { PORTB, 4, PIO_DIGITAL, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_4 }, 
+  { PORTB, 4, PIO_DIGITAL, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_4 },    // used as input only
   { PORTB, 1, PIO_ANALOG,  PIN_ATTR_ANALOG,  ADC_Channel9,   NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_1 }, 
   { PORTB, 0, PIO_ANALOG,  PIN_ATTR_ANALOG,  ADC_Channel8,   NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_0 }, 
   { PORTB, 5, PIO_DIGITAL, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_5 }, 
@@ -293,7 +293,7 @@ void ledYellowThreeLight(uint32_t value)   {
 }
 
 bool isOnBattery(void) {   
-    return !digitalRead(PIN_EXT_PWR);
+    return digitalRead(PIN_EXT_PWR);
 }
 
 

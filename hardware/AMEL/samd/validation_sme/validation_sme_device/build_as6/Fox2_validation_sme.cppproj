@@ -229,6 +229,7 @@
       <Value>../../../../../../../../ArduinoZero/hardware/tools/CMSIS/Device/ATMEL</Value>
       <Value>../../../../../../../../ArduinoZero/hardware/tools/CMSIS/CMSIS/Include</Value>
       <Value>../../../../../../../../../../../Documents/Arduino/libraries/sme-le51-868-library/src</Value>
+      <Value>../../../../../../../../../../../Documents/Arduino/libraries/SmartEverything_SE868-AS/src</Value>
     </ListValues>
   </armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
@@ -268,6 +269,8 @@
   <ItemGroup>
     <Folder Include="core" />
     <Folder Include="core\USB" />
+    <Folder Include="GPS\" />
+    <Folder Include="GPS\gps" />
     <Folder Include="SFX" />
     <Folder Include="SFX\sigFox" />
     <Folder Include="Wire" />
@@ -275,6 +278,30 @@
     <Folder Include="variant" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\gps\sl868a.cpp">
+      <SubType>compile</SubType>
+      <Link>GPS\gps\sl868a.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\gps\sl868aModel.h">
+      <SubType>compile</SubType>
+      <Link>GPS\gps\sl868aModel.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\gps\sl868aParser.cpp">
+      <SubType>compile</SubType>
+      <Link>GPS\gps\sl868aParser.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\gps\sl868aParser.h">
+      <SubType>compile</SubType>
+      <Link>GPS\gps\sl868aParser.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\gps\smeErrorCode.h">
+      <SubType>compile</SubType>
+      <Link>GPS\gps\smeErrorCode.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\SmartEverything_SE868-AS\src\sl868a.h">
+      <SubType>compile</SubType>
+      <Link>GPS\sl868a.h</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\..\..\..\..\..\Documents\Arduino\libraries\sme-le51-868-library\src\sigFox\smeErrorCode.h">
       <SubType>compile</SubType>
       <Link>SFX\sigFox\smeErrorCode.h</Link>

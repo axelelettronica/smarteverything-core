@@ -63,7 +63,7 @@ void initVariant() {
     
     // initialize The EXT_PWR Pin as input
     // it will be HIGH when the battery is not connected
-    pinMode(PIN_EXT_PWR, INPUT_PULLDOWN); 
+    pinMode(PIN_EXT_PWR, INPUT_PULLUP); 
     
     // initialize the battery monitor
     pinMode(PIN_BATT_MON, INPUT);
